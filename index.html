@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vishstools.xyz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f6f1ec;
+            color: #3d3532;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            padding: 32px 40px 0;
+            margin-bottom: 0;
+        }
+
+        .logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.15rem;
+            font-weight: 400;
+            color: #3d3532;
+            letter-spacing: 0.01em;
+            text-decoration: none;
+        }
+
+        .logo span { color: #b8ada4; }
+
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 24px 120px;
+            text-align: center;
+        }
+
+        .page {
+            max-width: 520px;
+            width: 100%;
+        }
+
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2.8rem, 7vw, 4rem);
+            font-weight: 400;
+            line-height: 1.08;
+            letter-spacing: -0.015em;
+            color: #3d3532;
+            margin-bottom: 32px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            line-height: 1.65;
+            color: #9b8e85;
+            margin-bottom: 64px;
+        }
+
+        .email-form {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .email-form input {
+            flex: 1;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            padding: 16px 20px;
+            border: 1.5px solid #d1c8bf;
+            border-radius: 100px;
+            outline: none;
+            background: transparent;
+            color: #3d3532;
+            transition: border-color 0.25s;
+        }
+
+        .email-form input:focus { border-color: #3d3532; }
+        .email-form input::placeholder { color: #c4b9af; }
+
+        .email-form button {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #f6f1ec;
+            background: #3d3532;
+            border: none;
+            padding: 16px 28px;
+            border-radius: 100px;
+            cursor: pointer;
+            white-space: nowrap;
+            letter-spacing: 0.01em;
+            transition: background 0.25s;
+        }
+
+        .email-form button:hover { background: #564e4a; }
+
+        .note {
+            font-size: 0.8rem;
+            color: #c4b9af;
+            letter-spacing: 0.01em;
+            transition: color 0.3s;
+        }
+
+        .success-msg {
+            color: #3d3532 !important;
+            font-weight: 600;
+        }
+
+        .footer {
+            padding: 48px 40px 56px;
+            font-size: 0.8rem;
+            color: #c4b9af;
+        }
+
+        .footer a {
+            color: #9b8e85;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer a:hover { color: #3d3532; }
+
+        .footer a + a { margin-left: 20px; }
+
+        .links-row {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 56px;
+        }
+
+        .links-row a {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #3d3532;
+            text-decoration: none;
+            padding: 14px 28px;
+            border: 1.5px solid #c9bfb6;
+            border-radius: 100px;
+            transition: border-color 0.25s, background 0.25s, color 0.25s;
+        }
+
+        .links-row a:hover {
+            border-color: #3d3532;
+            background: #3d3532;
+            color: #f6f1ec;
+        }
+
+        @media (max-width: 500px) {
+            .email-form {
+                flex-direction: column;
+            }
+
+            .email-form button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <a href="/" class="logo">vishstools<span>.xyz</span></a>
+</header>
+
+<main class="main">
+    <div class="page">
+        <h1>I make tools for data professionals.</h1>
+
+        <p class="subtitle">Subscribe to stay in the loop.</p>
+
+        <form class="email-form" onsubmit="handleSubmit(event)">
+            <input type="email" placeholder="you@email.com" required aria-label="Email address">
+            <button type="submit">Subscribe</button>
+        </form>
+        <p class="note">No spam. Unsubscribe anytime.</p>
+
+        <div class="links-row">
+            <a href="https://www.linkedin.com/in/vishesh-jaggi/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://substack.com/@visheshjaggi" target="_blank" rel="noopener">Substack</a>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <a href="https://www.linkedin.com/in/vishesh-jaggi/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://substack.com/@visheshjaggi" target="_blank" rel="noopener">Substack</a>
+</footer>
+
+<script>
+    function handleSubmit(e) {
+        e.preventDefault();
+        const form = e.target;
+        const input = form.querySelector('input');
+        const email = input.value;
+        const note = form.nextElementSibling;
+
+        // Store email in localStorage as a simple local log
+        const emails = JSON.parse(localStorage.getItem('vishstools_emails') || '[]');
+        emails.push({ email, date: new Date().toISOString() });
+        localStorage.setItem('vishstools_emails', JSON.stringify(emails));
+
+        input.value = '';
+        note.textContent = "You're in. We'll be in touch.";
+        note.classList.add('success-msg');
+
+        setTimeout(() => {
+            note.textContent = 'No spam. Unsubscribe anytime.';
+            note.classList.remove('success-msg');
+        }, 4000);
+    }
+</script>
+
+</body>
+</html>
