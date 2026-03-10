@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vishstools.xyz</title>
+    <title>vistools.xyz</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -180,7 +180,7 @@
 <body>
 
 <header class="header">
-    <a href="/" class="logo">vishstools<span>.xyz</span></a>
+    <a href="/" class="logo">vistools<span>.xyz</span></a>
 </header>
 
 <main class="main">
@@ -190,7 +190,7 @@
         <p class="subtitle">Subscribe to stay in the loop.</p>
 
         <form class="email-form" onsubmit="handleSubmit(event)">
-            <input type="email" placeholder="you@email.com" required aria-label="Email address">
+            <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address">
             <button type="submit">Subscribe</button>
         </form>
         <p class="note">No spam. Unsubscribe anytime.</p>
@@ -208,26 +208,45 @@
 </footer>
 
 <script>
-    function handleSubmit(e) {
+    // Replace with your Formspree form ID (from formspree.io)
+    const FORMSPREE_URL = 'https://formspree.io/f/YOUR_FORM_ID';
+
+    async function handleSubmit(e) {
         e.preventDefault();
         const form = e.target;
         const input = form.querySelector('input');
-        const email = input.value;
+        const button = form.querySelector('button');
+        const email = input.value.trim();
         const note = form.nextElementSibling;
 
-        // Store email in localStorage as a simple local log
-        const emails = JSON.parse(localStorage.getItem('vishstools_emails') || '[]');
-        emails.push({ email, date: new Date().toISOString() });
-        localStorage.setItem('vishstools_emails', JSON.stringify(emails));
+        button.disabled = true;
+        button.textContent = '…';
 
-        input.value = '';
-        note.textContent = "You're in. We'll be in touch.";
-        note.classList.add('success-msg');
+        try {
+            const res = await fetch(FORMSPREE_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            if (res.ok) {
+                input.value = '';
+                note.textContent = "You're in. We'll be in touch.";
+                note.classList.add('success-msg');
+                setTimeout(() => {
+                    note.textContent = 'No spam. Unsubscribe anytime.';
+                    note.classList.remove('success-msg');
+                }, 4000);
+            } else {
+                note.textContent = 'Something went wrong. Try again?';
+                note.classList.add('success-msg');
+            }
+        } catch (err) {
+            note.textContent = 'Something went wrong. Try again?';
+            note.classList.add('success-msg');
+        }
 
-        setTimeout(() => {
-            note.textContent = 'No spam. Unsubscribe anytime.';
-            note.classList.remove('success-msg');
-        }, 4000);
+        button.disabled = false;
+        button.textContent = 'Subscribe';
     }
 </script>
 
