@@ -1,253 +1,1136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vishtools.xyz</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vishesh Jaggi — Marketing Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --paper: #f5f2eb;
+    --paper-dark: #ede9df;
+    --accent: #c8440a;
+    --accent-light: #f0d5c8;
+    --muted: #8a8478;
+    --rule: #d4cfc4;
+  }
 
-        html {
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #f6f1ec;
-            color: #3d3532;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+  html { scroll-behavior: smooth; }
 
-        .header {
-            padding: 32px 40px 0;
-            margin-bottom: 0;
-        }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
 
-        .logo {
-            font-family: 'DM Serif Display', serif;
-            font-size: 1.15rem;
-            font-weight: 400;
-            color: #3d3532;
-            letter-spacing: 0.01em;
-            text-decoration: none;
-        }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.6;
+  }
 
-        .logo span { color: #b8ada4; }
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.25rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(245, 242, 235, 0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
 
-        .main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 80px 24px 120px;
-            text-align: center;
-        }
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+  }
 
-        .page {
-            max-width: 520px;
-            width: 100%;
-        }
+  .nav-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 1px;
+    transition: opacity 0.2s;
+  }
 
-        h1 {
-            font-family: 'DM Serif Display', serif;
-            font-size: clamp(2.8rem, 7vw, 4rem);
-            font-weight: 400;
-            line-height: 1.08;
-            letter-spacing: -0.015em;
-            color: #3d3532;
-            margin-bottom: 32px;
-        }
+  .nav-cta:hover { opacity: 0.6; }
 
-        .subtitle {
-            font-size: 1.1rem;
-            line-height: 1.65;
-            color: #9b8e85;
-            margin-bottom: 64px;
-        }
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
 
-        .email-form {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
+  .hero-left {
+    padding: 6rem 3rem 4rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
 
-        .email-form input {
-            flex: 1;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            padding: 16px 20px;
-            border: 1.5px solid #d1c8bf;
-            border-radius: 100px;
-            outline: none;
-            background: transparent;
-            color: #3d3532;
-            transition: border-color 0.25s;
-        }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
 
-        .email-form input:focus { border-color: #3d3532; }
-        .email-form input::placeholder { color: #c4b9af; }
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
 
-        .email-form button {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #f6f1ec;
-            background: #3d3532;
-            border: none;
-            padding: 16px 28px;
-            border-radius: 100px;
-            cursor: pointer;
-            white-space: nowrap;
-            letter-spacing: 0.01em;
-            transition: background 0.25s;
-        }
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
 
-        .email-form button:hover { background: #564e4a; }
+  .hero-body {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 440px;
+    line-height: 1.75;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
 
-        .note {
-            font-size: 0.8rem;
-            color: #c4b9af;
-            letter-spacing: 0.01em;
-            transition: color 0.3s;
-        }
+  .hero-body strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
 
-        .success-msg {
-            color: #3d3532 !important;
-            font-weight: 600;
-        }
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
 
-        .footer {
-            padding: 48px 40px 56px;
-            font-size: 0.8rem;
-            color: #c4b9af;
-        }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.9rem 2rem;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-block;
+  }
 
-        .footer a {
-            color: #9b8e85;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
+  .btn-primary:hover {
+    background: var(--accent);
+    transform: translateY(-1px);
+  }
 
-        .footer a:hover { color: #3d3532; }
+  .btn-secondary {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 1px;
+    transition: color 0.2s;
+  }
 
-        .footer a + a { margin-left: 20px; }
+  .btn-secondary:hover { color: var(--ink); }
 
-        .links-row {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 56px;
-        }
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
 
-        .links-row a {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #3d3532;
-            text-decoration: none;
-            padding: 14px 28px;
-            border: 1.5px solid #c9bfb6;
-            border-radius: 100px;
-            transition: border-color 0.25s, background 0.25s, color 0.25s;
-        }
+  .hero-graphic {
+    position: absolute;
+    inset: 0;
+    background: var(--paper-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
 
-        .links-row a:hover {
-            border-color: #3d3532;
-            background: #3d3532;
-            color: #f6f1ec;
-        }
+  .grid-visual {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
 
-        @media (max-width: 500px) {
-            .email-form {
-                flex-direction: column;
-            }
+  .grid-visual svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.12;
+  }
 
-            .email-form button {
-                width: 100%;
-            }
-        }
-    </style>
+  .floating-stat {
+    position: absolute;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 1.25rem 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+  }
+
+  .floating-stat:nth-child(2) {
+    top: 22%;
+    left: 8%;
+    animation-delay: 1s;
+  }
+
+  .floating-stat:nth-child(3) {
+    top: 48%;
+    right: 10%;
+    animation-delay: 1.2s;
+  }
+
+  .floating-stat:nth-child(4) {
+    bottom: 22%;
+    left: 15%;
+    animation-delay: 1.4s;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.35rem;
+  }
+
+  .stat-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .stat-value span {
+    color: var(--accent);
+  }
+
+  .marquee-wrap {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    overflow: hidden;
+    padding: 0.9rem 0;
+    background: var(--paper-dark);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 0;
+    white-space: nowrap;
+    animation: marquee 28s linear infinite;
+  }
+
+  .marquee-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  .marquee-item::after {
+    content: '×';
+    color: var(--accent);
+    font-size: 0.8rem;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .section {
+    padding: 7rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 3rem;
+    background: var(--accent);
+    opacity: 0.4;
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-top: 1rem;
+  }
+
+  .problem-item {
+    background: var(--paper);
+    padding: 2.5rem;
+    transition: background 0.2s;
+  }
+
+  .problem-item:hover { background: var(--paper-dark); }
+
+  .problem-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .problem-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+
+  .problem-sub {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .about-section {
+    padding: 6rem 3rem;
+    background: var(--ink);
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-section::before {
+    content: 'J';
+    position: absolute;
+    right: -2rem;
+    top: -3rem;
+    font-family: 'DM Serif Display', serif;
+    font-size: 28rem;
+    color: rgba(245,242,235,0.03);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .about-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .about-left .section-label { color: #c8440a; }
+  .about-left .section-label::after { background: #c8440a; }
+
+  .about-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .about-bio {
+    font-size: 1rem;
+    color: rgba(245,242,235,0.65);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  .about-bio strong {
+    color: var(--paper);
+    font-weight: 400;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .about-stat {
+    padding: 1.5rem;
+    background: rgba(245,242,235,0.03);
+  }
+
+  .about-stat-val {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--paper);
+    line-height: 1;
+    margin-bottom: 0.35rem;
+  }
+
+  .about-stat-val em { color: var(--accent); font-style: normal; }
+
+  .about-stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,242,235,0.4);
+  }
+
+  .pricing-section {
+    padding: 7rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .pricing-header {
+    margin-bottom: 4rem;
+  }
+
+  .pricing-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.2rem, 3.5vw, 3.5rem);
+    line-height: 1.1;
+    max-width: 520px;
+  }
+
+  .pricing-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .pricing-sub {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-top: 1rem;
+    max-width: 420px;
+    line-height: 1.7;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .pricing-card {
+    border: 1px solid var(--rule);
+    padding: 3rem;
+    position: relative;
+    transition: border-color 0.2s, transform 0.2s;
+    background: var(--paper);
+  }
+
+  .pricing-card:hover {
+    border-color: var(--ink);
+    transform: translateY(-3px);
+  }
+
+  .pricing-card.featured {
+    border-color: var(--accent);
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .pricing-card.featured:hover {
+    border-color: var(--accent);
+  }
+
+  .card-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 0.3rem 0.7rem;
+    display: inline-block;
+    margin-bottom: 2rem;
+  }
+
+  .pricing-card.featured .card-badge {
+    background: rgba(200, 68, 10, 0.2);
+  }
+
+  .card-tier {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .pricing-card.featured .card-tier { color: rgba(245,242,235,0.45); }
+
+  .card-price {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3.5rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.35rem;
+  }
+
+  .card-price sup {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    vertical-align: super;
+  }
+
+  .card-cadence {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    text-transform: uppercase;
+  }
+
+  .pricing-card.featured .card-cadence { color: rgba(245,242,235,0.45); }
+
+  .card-divider {
+    height: 1px;
+    background: var(--rule);
+    margin-bottom: 2rem;
+  }
+
+  .pricing-card.featured .card-divider { background: rgba(255,255,255,0.1); }
+
+  .card-features {
+    list-style: none;
+    margin-bottom: 2.5rem;
+  }
+
+  .card-features li {
+    font-size: 0.92rem;
+    color: var(--muted);
+    padding: 0.6rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.5;
+  }
+
+  .pricing-card.featured .card-features li {
+    color: rgba(245,242,235,0.6);
+    border-bottom-color: rgba(255,255,255,0.08);
+  }
+
+  .card-features li::before {
+    content: '→';
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .card-features li:last-child { border-bottom: none; }
+
+  .card-cta {
+    display: block;
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1rem 1.5rem;
+    transition: all 0.2s;
+  }
+
+  .pricing-card:not(.featured) .card-cta {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .pricing-card:not(.featured) .card-cta:hover { background: var(--accent); }
+
+  .pricing-card.featured .card-cta {
+    background: var(--accent);
+    color: var(--paper);
+  }
+
+  .pricing-card.featured .card-cta:hover { background: #a83508; }
+
+  .founding-note {
+    margin-top: 2.5rem;
+    padding: 1.5rem;
+    border: 1px solid var(--rule);
+    background: var(--paper-dark);
+  }
+
+  .founding-note p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    line-height: 1.7;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  .founding-note strong { color: var(--ink); }
+
+  .process-section {
+    padding: 5rem 3rem;
+    border-top: 1px solid var(--rule);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-top: 3rem;
+  }
+
+  .process-step {
+    background: var(--paper);
+    padding: 2rem 1.75rem;
+  }
+
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    margin-bottom: 1rem;
+  }
+
+  .step-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .step-body {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .faq-section {
+    padding: 6rem 3rem;
+    background: var(--paper-dark);
+    border-top: 1px solid var(--rule);
+  }
+
+  .faq-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--rule);
+    padding: 1.75rem 0;
+  }
+
+  .faq-q {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .faq-q::after {
+    content: '+';
+    font-family: 'DM Mono', monospace;
+    font-size: 1.2rem;
+    color: var(--accent);
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+
+  .faq-a {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.75;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+
+  .faq-item.open .faq-a {
+    max-height: 200px;
+    padding-top: 1rem;
+  }
+
+  .cta-footer {
+    padding: 7rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid var(--rule);
+  }
+
+  .cta-footer::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(200,68,10,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-title em { font-style: italic; color: var(--accent); }
+
+  .cta-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 420px;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+  }
+
+  .site-footer {
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .footer-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--ink); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 7rem 1.5rem 3rem; }
+    .hero-right { display: none; }
+    .section { padding: 5rem 1.5rem; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .about-section { padding: 5rem 1.5rem; }
+    .pricing-section { padding: 5rem 1.5rem; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .faq-section { padding: 4rem 1.5rem; }
+    .cta-footer { padding: 5rem 1.5rem; }
+    .site-footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
 </head>
 <body>
 
-<header class="header">
-    <a href="/" class="logo">vishtools<span>.xyz</span></a>
-</header>
+<nav>
+  <a href="#" class="nav-logo">Vishesh Jaggi</a>
+  <a href="#pricing" class="nav-cta">View Pricing</a>
+</nav>
 
-<main class="main">
-    <div class="page">
-        <h1>I make tools for data professionals.</h1>
-
-        <p class="subtitle">Subscribe to stay in the loop.</p>
-
-        <form class="email-form" onsubmit="handleSubmit(event)">
-            <input type="email" name="email" placeholder="you@email.com" required aria-label="Email address">
-            <button type="submit">Subscribe</button>
-        </form>
-        <p class="note">No spam. Unsubscribe anytime.</p>
-
-        <div class="links-row">
-            <a href="https://www.linkedin.com/in/vishesh-jaggi/" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="https://substack.com/@visheshjaggi" target="_blank" rel="noopener">Substack</a>
-        </div>
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Marketing Analytics · Fractional · Async</p>
+    <h1 class="hero-title">Your marketing<br>should be<br><em>measurable.</em></h1>
+    <p class="hero-body">
+      Most marketing teams are spending real money with no real idea what's working.
+      I help you <strong>build the measurement infrastructure</strong> to find out:
+      holdout testing, dashboards, audience pipelines, and the strategy to use them.
+    </p>
+    <div class="hero-actions">
+      <a href="#pricing" class="btn-primary">See Available Spots</a>
+      <a href="#about" class="btn-secondary">About Vishesh</a>
     </div>
-</main>
+  </div>
+  <div class="hero-right">
+    <div class="hero-graphic">
+      <div class="grid-visual">
+        <svg viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#0f0e0c" stroke-width="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)"/>
+          <line x1="80" y1="580" x2="80" y2="200" stroke="#c8440a" stroke-width="1.5"/>
+          <line x1="80" y1="580" x2="520" y2="580" stroke="#c8440a" stroke-width="1.5"/>
+          <polyline points="80,520 160,460 240,380 320,300 400,240 480,160" fill="none" stroke="#c8440a" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="80" cy="520" r="4" fill="#c8440a"/>
+          <circle cx="160" cy="460" r="4" fill="#c8440a"/>
+          <circle cx="240" cy="380" r="4" fill="#c8440a"/>
+          <circle cx="320" cy="300" r="4" fill="#c8440a"/>
+          <circle cx="400" cy="240" r="4" fill="#c8440a"/>
+          <circle cx="480" cy="160" r="4" fill="#c8440a"/>
+          <line x1="80" y1="520" x2="80" y2="580" stroke="#c8440a" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+          <line x1="160" y1="460" x2="160" y2="580" stroke="#c8440a" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+          <line x1="240" y1="380" x2="240" y2="580" stroke="#c8440a" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+          <line x1="320" y1="300" x2="320" y2="580" stroke="#c8440a" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+          <line x1="400" y1="240" x2="400" y2="580" stroke="#c8440a" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+          <line x1="480" y1="160" x2="480" y2="580" stroke="#c8440a" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+        </svg>
+        <div class="floating-stat">
+          <p class="stat-label">Creators Reached</p>
+          <p class="stat-value">7<span>M+</span></p>
+        </div>
+        <div class="floating-stat">
+          <p class="stat-label">Holdout Lift Measured</p>
+          <p class="stat-value">∞<span>×</span></p>
+        </div>
+        <div class="floating-stat">
+          <p class="stat-label">Targeting Universe</p>
+          <p class="stat-value">40<span>M+</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<footer class="footer">
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item">Holdout Testing</div>
+    <div class="marquee-item">Audience Segmentation</div>
+    <div class="marquee-item">A/B Experiment Design</div>
+    <div class="marquee-item">Campaign Measurement</div>
+    <div class="marquee-item">Data Pipelines</div>
+    <div class="marquee-item">Marketing Dashboards</div>
+    <div class="marquee-item">Incrementality</div>
+    <div class="marquee-item">Holdout Testing</div>
+    <div class="marquee-item">Audience Segmentation</div>
+    <div class="marquee-item">A/B Experiment Design</div>
+    <div class="marquee-item">Campaign Measurement</div>
+    <div class="marquee-item">Data Pipelines</div>
+    <div class="marquee-item">Marketing Dashboards</div>
+    <div class="marquee-item">Incrementality</div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="section-label">The Problem</p>
+  <div class="problem-grid">
+    <div class="problem-item">
+      <p class="problem-number">01</p>
+      <p class="problem-text">You're spending on marketing but can't prove it's working</p>
+      <p class="problem-sub">Last-click attribution tells you what converted, not what caused the conversion. There's a difference.</p>
+    </div>
+    <div class="problem-item">
+      <p class="problem-number">02</p>
+      <p class="problem-text">Your dashboards show activity, not impact</p>
+      <p class="problem-sub">Impressions, clicks, CPMs: none of these tell you if your marketing is actually moving the needle.</p>
+    </div>
+    <div class="problem-item">
+      <p class="problem-number">03</p>
+      <p class="problem-text">You don't have a data scientist, and you don't need a full-time one</p>
+      <p class="problem-sub">What you need is someone who can build the infrastructure once, properly, so your team can run with it.</p>
+    </div>
+    <div class="problem-item">
+      <p class="problem-number">04</p>
+      <p class="problem-text">Your targeting audience is a gut call, not a strategy</p>
+      <p class="problem-sub">Without proper audience pipelines, you're either over-targeting or leaving reach on the table. Usually both.</p>
+    </div>
+  </div>
+</div>
+
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-left">
+      <p class="section-label">Who I Am</p>
+      <h2 class="about-name">Vishesh<br><em>Jaggi</em></h2>
+      <p class="about-bio">
+        I'm a marketing data scientist who led <strong>Facebook in-app strategy</strong> for Meta's Creator Marketing team, owning measurement infrastructure, holdout experiments, and audience pipelines at scale. I've reached <strong>7M+ creators</strong> through in-app notifications and built the dashboards that told us what was actually working.
+      </p>
+      <p class="about-bio">
+        Now I work with a small number of marketing teams who are serious about measurement, helping them build the infrastructure to make better decisions, faster.
+      </p>
+    </div>
+    <div class="about-right">
+      <div class="about-stats">
+        <div class="about-stat">
+          <p class="about-stat-val">7<em>M+</em></p>
+          <p class="about-stat-label">Creators via in-app</p>
+        </div>
+        <div class="about-stat">
+          <p class="about-stat-val">40<em>M+</em></p>
+          <p class="about-stat-label">Targeting universe</p>
+        </div>
+        <div class="about-stat">
+          <p class="about-stat-val">8<em>M+</em></p>
+          <p class="about-stat-label">Via house ads</p>
+        </div>
+        <div class="about-stat">
+          <p class="about-stat-val">∞→<em>hrs</em></p>
+          <p class="about-stat-label">Days to hours via AI</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing-section" id="pricing">
+  <div class="pricing-header">
+    <p class="section-label">Engagement Options</p>
+    <h2 class="pricing-title">Simple, <em>async-first</em> engagements. No retainer drama.</h2>
+    <p class="pricing-sub">Two spots available per month. I work with teams who are serious about getting measurement right.</p>
+  </div>
+
+  <div class="pricing-grid">
+
+    <div class="pricing-card">
+      <span class="card-badge">Founding Rate: 2 Spots</span>
+      <p class="card-tier">Tier One</p>
+      <p class="card-price"><sup>$</sup>2,500</p>
+      <p class="card-cadence">per month · async delivery</p>
+      <div class="card-divider"></div>
+      <ul class="card-features">
+        <li>One active workstream per month</li>
+        <li>Audit of current measurement setup</li>
+        <li>Holdout test design or dashboard build</li>
+        <li>Audience segmentation recommendations</li>
+        <li>Weekly async check-in via Loom or Slack</li>
+        <li>Email support, 48hr response time</li>
+      </ul>
+      <a href="mailto:hello@vishesh.tools?subject=Tier%201%20Inquiry" class="card-cta">Apply for a Spot →</a>
+    </div>
+
+    <div class="pricing-card featured">
+      <span class="card-badge">Most Committed</span>
+      <p class="card-tier">Tier Two</p>
+      <p class="card-price"><sup>$</sup>5,000</p>
+      <p class="card-cadence">per month · two workstreams</p>
+      <div class="card-divider"></div>
+      <ul class="card-features">
+        <li>Two concurrent workstreams per month</li>
+        <li>Everything in Tier One</li>
+        <li>A/B test design and analysis end-to-end</li>
+        <li>Data pipeline build and maintenance</li>
+        <li>Slack access for faster turnaround</li>
+        <li>Monthly strategy review: what to scale, cut, or fix</li>
+      </ul>
+      <a href="mailto:hello@vishesh.tools?subject=Tier%202%20Inquiry" class="card-cta">Apply for a Spot →</a>
+    </div>
+
+  </div>
+
+  <div class="founding-note">
+    <p>
+      <strong>A note on founding rates:</strong> These are introductory prices for my first two clients.
+      Standard rates move to $3,000 and $7,000/month once founding spots are filled.
+      In exchange, I ask for honest feedback and a testimonial if you're happy with the work.
+      Month-to-month. No lock-in. Cancel any time with 2 weeks notice.
+    </p>
+  </div>
+</section>
+
+<section class="process-section">
+  <p class="section-label">How It Works</p>
+  <div class="process-steps">
+    <div class="process-step">
+      <p class="step-num">Step 01</p>
+      <p class="step-title">Apply & Align</p>
+      <p class="step-body">Send me a quick note about your team, your current measurement setup, and what you're trying to solve. I'll respond within 48 hours.</p>
+    </div>
+    <div class="process-step">
+      <p class="step-num">Step 02</p>
+      <p class="step-title">Kickoff Audit</p>
+      <p class="step-body">We start with a measurement audit. I map what you have, what's broken, and what to build first. This sets the roadmap.</p>
+    </div>
+    <div class="process-step">
+      <p class="step-num">Step 03</p>
+      <p class="step-title">Async Delivery</p>
+      <p class="step-body">Work happens async. Weekly Loom updates, Slack for Tier 2. You don't need to be in meetings. You need things to get built.</p>
+    </div>
+    <div class="process-step">
+      <p class="step-num">Step 04</p>
+      <p class="step-title">Ship & Iterate</p>
+      <p class="step-body">Each month closes with a delivered workstream and a clear view of what to tackle next. You keep everything we build.</p>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section">
+  <div class="faq-inner">
+    <p class="section-label">FAQ</p>
+    <div class="faq-item">
+      <p class="faq-q">What counts as a "workstream"?</p>
+      <p class="faq-a">A workstream is one concrete deliverable: a holdout test designed and documented, a dashboard built, an audience pipeline built, an A/B test analyzed with recommendations. Specific, scoped, done.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">What size companies do you work with?</p>
+      <p class="faq-a">Best fit is marketing teams spending $30K to $500K/month on paid channels who don't have a dedicated measurement person. Startup growth teams, DTC brands, and mid-size performance marketing teams.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">Do I need a data team already?</p>
+      <p class="faq-a">No. That's often why you're here. I can work with basic data access and build from the ground up. You don't need existing infrastructure. That's often what I'm building.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">How long do engagements run?</p>
+      <p class="faq-a">Month-to-month with 2 weeks notice to cancel. Most engagements run 3 to 6 months naturally as we work through the measurement roadmap. No lock-in, no minimum commitment.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">Why founding rates?</p>
+      <p class="faq-a">I'm launching this practice and want to make sure I deliver real value before charging full price. Founding clients get a meaningful discount in exchange for honest feedback and a testimonial. Rates increase once founding spots are filled.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-footer">
+  <h2 class="cta-title">Ready to know<br>what's <em>actually</em><br>working?</h2>
+  <p class="cta-sub">Two founding spots available. Once they're filled, rates go up. Apply now and I'll respond within 48 hours.</p>
+  <a href="mailto:hello@vishesh.tools?subject=Analytics%20Inquiry" class="btn-primary">Apply for a Spot →</a>
+</section>
+
+<footer class="site-footer">
+  <p class="footer-logo">Vishesh Jaggi · Marketing Analytics</p>
+  <div class="footer-links">
+    <a href="https://vishtools.xyz" target="_blank" rel="noopener">vishtools.xyz</a>
     <a href="https://www.linkedin.com/in/vishesh-jaggi/" target="_blank" rel="noopener">LinkedIn</a>
     <a href="https://substack.com/@visheshjaggi" target="_blank" rel="noopener">Substack</a>
+    <a href="mailto:hello@vishesh.tools">Contact</a>
+  </div>
 </footer>
 
 <script>
-    // Replace with your Formspree form ID (from formspree.io)
-    const FORMSPREE_URL = 'https://formspree.io/f/xbdzgkqv';
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
 
-    async function handleSubmit(e) {
-        e.preventDefault();
-        const form = e.target;
-        const input = form.querySelector('input');
-        const button = form.querySelector('button');
-        const email = input.value.trim();
-        const note = form.nextElementSibling;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
 
-        button.disabled = true;
-        button.textContent = '…';
-
-        try {
-            const res = await fetch(FORMSPREE_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email })
-            });
-            if (res.ok) {
-                input.value = '';
-                note.textContent = "You're in. We'll be in touch.";
-                note.classList.add('success-msg');
-                setTimeout(() => {
-                    note.textContent = 'No spam. Unsubscribe anytime.';
-                    note.classList.remove('success-msg');
-                }, 4000);
-            } else {
-                note.textContent = 'Something went wrong. Try again?';
-                note.classList.add('success-msg');
-            }
-        } catch (err) {
-            note.textContent = 'Something went wrong. Try again?';
-            note.classList.add('success-msg');
-        }
-
-        button.disabled = false;
-        button.textContent = 'Subscribe';
-    }
+  document.querySelectorAll('.problem-item, .process-step, .pricing-card, .about-stat').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
 </script>
 
 </body>
